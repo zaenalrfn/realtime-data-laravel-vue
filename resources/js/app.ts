@@ -38,6 +38,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(window.Echo)
             .mount(el);
     },
     progress: {
@@ -47,3 +48,7 @@ createInertiaApp({
 
 // This will set light / dark mode on page load...
 initializeTheme();
+
+window.Echo.channel('hello-world').listen('HelloWorld', (e: any) => {
+    console.log(e);
+});
