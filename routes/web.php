@@ -13,7 +13,9 @@ Route::get('/', function () {
 Route::post('/messages',   [MessageController::class, 'store'])->name('messages.store');
 
 Route::get('visit-count', function () {
-    return Inertia::render('VisitCount');
+    return Inertia::render('VisitCount', [
+        'user' => auth()->user(),
+    ]);
 });
 
 

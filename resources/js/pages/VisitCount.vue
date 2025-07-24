@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, defineProps} from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,6 +9,10 @@ type Message = {
     who: string,
 }
 
+const props = defineProps({
+    user: Object,
+});
+
 const messages = ref<Message[]>([]);
 const message = ref('');
 
@@ -17,7 +21,7 @@ const form = useForm({
     message: ''
 })
 
-window.Echo.private('messages').listen('MessageReceived', (e: any) => {
+window.Echo.private(`messages.${props?.user?.id}`).listen('MessageReceived', (e: any) => {
     if(!messages.value.find(msg => msg.id === e.id)) {
         messages.value.push(e);
     }
