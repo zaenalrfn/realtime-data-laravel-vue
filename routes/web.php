@@ -3,11 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Events\HelloWorld;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', function () {
     HelloWorld::dispatch();
     return Inertia::render('Welcome');
 })->name('home');
+
+Route::post('/messages',   [MessageController::class, 'store'])->name('messages.store');
 
 Route::get('visit-count', function () {
     return Inertia::render('VisitCount');
