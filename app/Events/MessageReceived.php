@@ -16,6 +16,7 @@ class MessageReceived implements ShouldBroadcast
 
     public $message;
     public $id;
+    public $who;
 
     /**
      * Create a new event instance.
@@ -24,6 +25,7 @@ class MessageReceived implements ShouldBroadcast
     {
         $this->message = $message;
         $this->id = $id;
+        $this->who = auth()->user()->name;
     }
 
     /**
@@ -34,7 +36,7 @@ class MessageReceived implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('messages'),
+            new PrivateChannel('messages'),
         ];
     }
 }

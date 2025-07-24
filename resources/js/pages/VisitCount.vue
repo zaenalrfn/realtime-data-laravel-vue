@@ -17,12 +17,9 @@ const form = useForm({
     message: ''
 })
 
-window.Echo.channel('messages').listen('MessageReceived', (e: any) => {
+window.Echo.private('messages').listen('MessageReceived', (e: any) => {
     if(!messages.value.find(msg => msg.id === e.id)) {
-        messages.value.push({
-            ...e,
-            who: 'Them'
-        });
+        messages.value.push(e);
     }
 })
 
@@ -33,7 +30,7 @@ const handleSubmit = () => {
     };
     messages.value.push({
         ...msg,
-        who: 'Me'
+        who: 'You'
     });
     form.id = msg.id;
     form.message = msg.message;
